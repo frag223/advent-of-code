@@ -3,33 +3,39 @@ package main
 import (
 	_ "embed"
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 )
 
-//go:embed test.txt
+//go:embed input.txt
 var input string
 
 func main() {
-	cache := map[string][]int{}
-	list := strings.Split(input, "\n")
-	for _, item := range list {
-		if item == "" {
-			continue
-		}
-		measurements := strings.Split(item, " ")
-		value, err := strconv.Atoi(measurements[0])
-		if err != nil {
-			log.Println("invalid number: ", measurements[0])
-			continue
-		}
-		for i := 1; i < len(measurements); i++ {
-			if measurements[i] != "" {
-				cache[measurements[i]] = append(cache[measurements[i]], value)
-			}
-		}
+	horizontal := 0
+	depth := 0
+	aim := 0
 
+	instructions := strings.Split(input, "\n")
+	for _, instruction := range instructions {
+		if instruction == "" {
+			continue
+		}
+		items := strings.Split(instruction, " ")
+		direction := items[0]
+		value, _ := strconv.Atoi(items[1])
+
+		switch direction {
+		case "forward":
+			horizontal += value
+			depth += (aim * value)
+		case "down":
+			aim += value
+		case "up":
+			aim -= value
+		default:
+			continue
+		}
 	}
-	fmt.Println(cache)
+	journey := horizontal * depth
+	fmt.Println("journey", journey)
 }
