@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-//go:embed test.txt
+//go:embed input.txt
 var input string
 
 func main() {
@@ -17,8 +17,6 @@ func main() {
 	tfm := transform(data)
 	gamma := getGamma(tfm)
 	epsilon := getEpsilon(tfm)
-	fmt.Println(gamma)
-	fmt.Println(epsilon)
 	result := productBinary(gamma, epsilon)
 	fmt.Println(result)
 }
