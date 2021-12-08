@@ -27,6 +27,20 @@ type BinaryDiagnostic struct {
 	One   int
 }
 
+func (b *BinaryDiagnostic) MostCommon() int {
+	if b.Zero > b.One {
+		return 0
+	}
+	return 1
+}
+
+func (b *BinaryDiagnostic) LeastCommon() int {
+	if b.Zero > b.One {
+		return 1
+	}
+	return 0
+}
+
 type Collection []BinaryDiagnostic
 
 func (a Collection) Len() int           { return len(a) }
@@ -95,4 +109,14 @@ func productBinary(first, second string) int64 {
 	f, _ := strconv.ParseInt(first, 2, 64)
 	s, _ := strconv.ParseInt(second, 2, 64)
 	return f * s
+}
+
+func foo(input string) string {
+	list := strings.Split(input, "\n")
+	binaryLength := len(list[0])
+
+	for i := 0; i < binaryLength; i++ {
+
+	}
+
 }
