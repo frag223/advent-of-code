@@ -20,7 +20,16 @@ func main() {
 	epsilon := getEpsilon(tfm)
 	result := productBinary(gamma, epsilon)
 	fmt.Println(result)
-	getOxy(tfm, input)
+	foo := getOxygen(list)
+	poo := getC02(list)
+
+	fmt.Println(foo)
+	fmt.Println(poo)
+
+	lifeSupport := productBinary(foo, poo)
+
+	fmt.Println(lifeSupport)
+
 }
 
 type BinaryDiagnostic struct {
@@ -111,3 +120,52 @@ func productBinary(first, second string) int64 {
 	s, _ := strconv.ParseInt(second, 2, 64)
 	return f * s
 }
+
+func getOxygen(list []string) string {
+	bLength := len(list[0])
+	tmpList := list
+	for i := 0; i < bLength; i++ {
+		if len(tmpList) <= 1 {
+			return tmpList[0]
+		}
+		data := extract(tmpList)
+		tfm := transform(data)
+
+		newList := filter(func(val string) bool {
+			cmp := tfm[i].MostCommon()
+			return string(val[i]) == fmt.Sprintf("%d", cmp)
+		}, tmpList)
+		tmpList = newList
+	}
+	return tmpList[0]
+}
+func getC02(list []string) string {
+	bLength := len(list[0])
+	tmpList := list
+	for i := 0; i < bLength; i++ {
+		if len(tmpList) == 1 {
+			return tmpList[0]
+		}
+		data := extract(list)
+		tfm := transform(data)
+
+		newList := filter(func(val string) bool {
+			cmp := tfm[i].LeastCommon()
+			return string(val[i]) == fmt.Sprintf("%d", cmp)
+		}, tmpList)
+		tmpList = newList
+	}
+	return tmpList[0]
+}
+
+func filter(fn predicateFunc, data []string) []string {
+	result := []string{}
+	for _, item := range data {
+		if fn(item) {
+			result = append(result, item)
+		}
+	}
+	return result
+}
+
+type predicateFunc = func(val string) bool
