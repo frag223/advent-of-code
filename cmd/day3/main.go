@@ -8,17 +8,19 @@ import (
 	"strings"
 )
 
-//go:embed input.txt
+//go:embed test.txt
 var input string
 
 func main() {
+	list := strings.Split(input, "\n")
 
-	data := extract(input)
+	data := extract(list)
 	tfm := transform(data)
 	gamma := getGamma(tfm)
 	epsilon := getEpsilon(tfm)
 	result := productBinary(gamma, epsilon)
 	fmt.Println(result)
+	getOxy(tfm, input)
 }
 
 type BinaryDiagnostic struct {
@@ -47,9 +49,8 @@ func (a Collection) Len() int           { return len(a) }
 func (a Collection) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a Collection) Less(i, j int) bool { return a[i].Order < a[j].Order }
 
-func extract(input string) map[int]map[int]int {
+func extract(list []string) map[int]map[int]int {
 	cache := map[int]map[int]int{}
-	list := strings.Split(input, "\n")
 	for _, bin := range list {
 		for idx, r := range bin {
 			pp, _ := strconv.Atoi(string(r))
@@ -109,14 +110,4 @@ func productBinary(first, second string) int64 {
 	f, _ := strconv.ParseInt(first, 2, 64)
 	s, _ := strconv.ParseInt(second, 2, 64)
 	return f * s
-}
-
-func foo(input string) string {
-	list := strings.Split(input, "\n")
-	binaryLength := len(list[0])
-
-	for i := 0; i < binaryLength; i++ {
-
-	}
-
 }
