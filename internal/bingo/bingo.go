@@ -58,7 +58,7 @@ func (b *Board) Print() {
 }
 
 func (b *Board) IsBingo() bool {
-	for i := 0; i < 5; i++ {
+	for i := 0; i < b.Size; i++ {
 		row := getRow(i, b.Grid)
 		column := getColumn(i, b.Grid)
 		if isBingo(row) || isBingo(column) {
