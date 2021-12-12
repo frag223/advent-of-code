@@ -9,7 +9,7 @@ import (
 	"github.com/frag223/advent-of-code/internal/bingo"
 )
 
-//go:embed test.txt
+//go:embed input.txt
 var input string
 
 func main() {
@@ -36,8 +36,10 @@ numbersToCallLoop:
 		}
 	}
 
-	fmt.Println(Sum(winner.UnselectedNumbers()))
+	sumUnpickedNumber := Sum(winner.UnselectedNumbers())
+	fmt.Println(sumUnpickedNumber)
 	fmt.Println(winningNumber)
+	fmt.Println(sumUnpickedNumber * winningNumber)
 }
 
 func generateBoardsFromList(list []string) []bingo.Board {
