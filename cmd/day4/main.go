@@ -65,8 +65,11 @@ func generateBoardsFromList(list []string) []bingo.Board {
 func buildBoard(boardRaw []string) bingo.Board {
 	b := bingo.New(len(boardRaw))
 	for _, row := range boardRaw {
-		numbersString := strings.Split(row, " ")
+		numbersString := strings.Split(strings.TrimSpace(row), " ")
 		for _, item := range numbersString {
+			if item == "" {
+				continue
+			}
 			number, _ := strconv.Atoi(item)
 			b.Add(number)
 		}
