@@ -9,6 +9,11 @@ import (
 	"github.com/frag223/advent-of-code/internal/bingo"
 )
 
+type Winner struct {
+	Board         bingo.Board
+	WinningNumber int
+}
+
 //go:embed input.txt
 var input string
 
@@ -20,23 +25,24 @@ func main() {
 
 	numbersToCall := strings.Split(list[0], ",")
 
-	var winner bingo.Board
+	var winners []Winner
 	winningNumber := 0
 
-numbersToCallLoop:
 	for _, rawNumber := range numbersToCall {
 		for _, board := range boards {
 			number, _ := strconv.Atoi(rawNumber)
 			board.Mark(number)
 			if board.IsBingo() {
-				winner = board
-				winningNumber = number
-				break numbersToCallLoop
+
+				winners = append(winners, Winner{
+					Board:         board,
+					WinningNumber: number,
+				})
 			}
 		}
 	}
 
-	sumUnpickedNumber := Sum(winner.UnselectedNumbers())
+	sumUnpickedNumber := Sum(winners[0].Board.UnselectedNumbers())
 	fmt.Println(sumUnpickedNumber)
 	fmt.Println(winningNumber)
 	fmt.Println(sumUnpickedNumber * winningNumber)
