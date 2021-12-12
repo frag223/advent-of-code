@@ -10,11 +10,6 @@ type Board struct {
 	Grid [][]Number
 }
 
-type Number struct {
-	Number   int
-	Selected bool
-}
-
 func New(size int) Board {
 	grid := make([][]Number, size)
 	return Board{

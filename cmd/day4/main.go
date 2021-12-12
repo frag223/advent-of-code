@@ -14,11 +14,30 @@ var input string
 
 func main() {
 	list := strings.Split(input, "\n")
-	// numbersToCall := list[0]
+
 	boardsRawList := list[1:]
 	boards := generateBoardsFromList(boardsRawList)
 
-	fmt.Println(boards)
+	numbersToCall := strings.Split(list[0], ",")
+
+	var winner bingo.Board
+	winningNumber := 0
+
+numbersToCallLoop:
+	for _, rawNumber := range numbersToCall {
+		for _, board := range boards {
+			number, _ := strconv.Atoi(rawNumber)
+			board.Mark(number)
+			if board.IsBingo() {
+				winner = board
+				winningNumber = number
+				break numbersToCallLoop
+			}
+		}
+	}
+
+	fmt.Println(winner)
+	fmt.Println(winningNumber)
 }
 
 func generateBoardsFromList(list []string) []bingo.Board {
