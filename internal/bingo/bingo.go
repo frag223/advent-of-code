@@ -1,13 +1,13 @@
 package bingo
 
 import (
-	"encoding/json"
 	"fmt"
 )
 
 type Board struct {
-	Size int
-	Grid [][]Number
+	Size           int
+	Grid           [][]Number
+	WinningNumbers WinningNumbers
 }
 
 func New(size int) Board {
@@ -19,7 +19,6 @@ func New(size int) Board {
 }
 
 func (b *Board) Add(number int) {
-
 	for index, row := range b.Grid {
 		if len(row) >= b.Size {
 			continue
@@ -48,15 +47,25 @@ func (b *Board) Mark(number int) bool {
 }
 
 func (b *Board) Print() {
-	d, _ := json.MarshalIndent(b.Grid, "\n", "  ")
-	fmt.Println(string(d))
+	fmt.Println(b.Grid)
 }
 
 func (b *Board) IsBingo() bool {
 	for i := 0; i < b.Size; i++ {
 		row := getRow(i, b.Grid)
 		column := getColumn(i, b.Grid)
-		if isBingo(row) || isBingo(column) {
+		if isBingo(row) {
+			b.WinningNumbers = WinningNumbers{
+				Numbers:   row,
+				Direction: Row,
+			}
+			return true
+		}
+		if isBingo(column) {
+			b.WinningNumbers = WinningNumbers{
+				Numbers:   column,
+				Direction: Column,
+			}
 			return true
 		}
 	}

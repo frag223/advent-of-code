@@ -14,5 +14,5 @@ type Number struct {
 
 type WinningNumbers struct {
 	Numbers   []Number
-	Direction string
+	Direction Direction
 }

@@ -36,7 +36,7 @@ numbersToCallLoop:
 		}
 	}
 
-	fmt.Println(winner)
+	fmt.Println(winner.Grid[0])
 	fmt.Println(winningNumber)
 }
 
