@@ -72,6 +72,19 @@ func (b *Board) IsBingo() bool {
 	return false
 }
 
+func (b *Board) UnselectedNumbers() []Number {
+	var result []Number
+	for _, row := range b.Grid {
+		for _, item := range row {
+			if !item.Selected {
+				result = append(result, item)
+				continue
+			}
+		}
+	}
+	return result
+}
+
 func getRow(rowID int, grid [][]Number) []Number {
 	return grid[rowID]
 }

@@ -36,7 +36,7 @@ numbersToCallLoop:
 		}
 	}
 
-	fmt.Println(winner.Grid[0])
+	fmt.Println(Sum(winner.UnselectedNumbers()))
 	fmt.Println(winningNumber)
 }
 
@@ -76,4 +76,12 @@ func buildBoard(boardRaw []string) bingo.Board {
 
 	}
 	return b
+}
+
+func Sum(list []bingo.Number) int {
+	var result int
+	for _, item := range list {
+		result += item.Number
+	}
+	return result
 }
