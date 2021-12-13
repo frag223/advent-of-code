@@ -26,26 +26,31 @@ func main() {
 	numbersToCall := strings.Split(list[0], ",")
 
 	var winners []Winner
-	winningNumber := 0
 
 	for _, rawNumber := range numbersToCall {
-		for _, board := range boards {
-			number, _ := strconv.Atoi(rawNumber)
+		number, _ := strconv.Atoi(rawNumber)
+		for idx, board := range boards {
+			if board.GameComplete {
+				continue
+			}
 			board.Mark(number)
 			if board.IsBingo() {
-
 				winners = append(winners, Winner{
 					Board:         board,
 					WinningNumber: number,
 				})
+				boards[idx] = board
 			}
 		}
 	}
 
-	sumUnpickedNumber := Sum(winners[0].Board.UnselectedNumbers())
+	lastWinner := winners[len(winners)-1]
+
+	sumUnpickedNumber := Sum(lastWinner.Board.UnselectedNumbers())
+	fmt.Println("------")
 	fmt.Println(sumUnpickedNumber)
-	fmt.Println(winningNumber)
-	fmt.Println(sumUnpickedNumber * winningNumber)
+	fmt.Println(lastWinner.WinningNumber)
+	fmt.Println(sumUnpickedNumber * lastWinner.WinningNumber)
 }
 
 func generateBoardsFromList(list []string) []bingo.Board {

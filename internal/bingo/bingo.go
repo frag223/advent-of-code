@@ -8,6 +8,7 @@ type Board struct {
 	Size           int
 	Grid           [][]Number
 	WinningNumbers WinningNumbers
+	GameComplete   bool
 }
 
 func New(size int) Board {
@@ -51,6 +52,9 @@ func (b *Board) Print() {
 }
 
 func (b *Board) IsBingo() bool {
+	if b.GameComplete {
+		return b.GameComplete
+	}
 	for i := 0; i < b.Size; i++ {
 		row := getRow(i, b.Grid)
 		column := getColumn(i, b.Grid)
@@ -59,17 +63,17 @@ func (b *Board) IsBingo() bool {
 				Numbers:   row,
 				Direction: Row,
 			}
-			return true
+			b.GameComplete = true
 		}
 		if isBingo(column) {
 			b.WinningNumbers = WinningNumbers{
 				Numbers:   column,
 				Direction: Column,
 			}
-			return true
+			b.GameComplete = true
 		}
 	}
-	return false
+	return b.GameComplete
 }
 
 func (b *Board) UnselectedNumbers() []Number {
