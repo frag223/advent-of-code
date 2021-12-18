@@ -5,19 +5,18 @@ import (
 	"fmt"
 )
 
-//go:embed test.txt
+//go:embed input.txt
 var input string
 
 func main() {
 
-	i := parseInput(input)
+	positions := parseInput(input)
+	d := NewDiagram(1000, false)
 
-	fmt.Println(i)
+	for _, line := range positions {
+		d.PlaceLine(line[0], line[1])
+	}
 
-	d := NewDiagram(10, true)
-	d.PlaceLine(Position{
-		X: 1,
-		Y: 1,
-	}, Position{X: 1, Y: 9})
-	fmt.Println("--------")
+	fmt.Println(d.GetCrossedPositions())
+	fmt.Println(len(d.GetCrossedPositions()))
 }
