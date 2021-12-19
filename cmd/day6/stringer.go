@@ -1,11 +1,30 @@
 package main
 
-import "strings"
+import (
+	"strconv"
+	"strings"
+)
 
-func parseInt() []int {
+func parseInput(input string) [][]int {
 	list := strings.Split(input, "\n")
-	pp := []int{}
+	convertedData := [][]int{}
 	for _, row := range list {
-		fishes
+		fishData := rowToFishes(row)
+		convertedData = append(convertedData, fishData)
 	}
+	return convertedData
+}
+
+func rowToFishes(rawMeasurement string) []int {
+	dirtyData := strings.Split(rawMeasurement, ":")
+	rawFishes := strings.Split(
+		strings.TrimSpace(dirtyData[1]),
+		",",
+	)
+	var fishData []int
+	for _, item := range rawFishes {
+		fish, _ := strconv.Atoi(item)
+		fishData = append(fishData, fish)
+	}
+	return fishData
 }
