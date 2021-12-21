@@ -11,13 +11,13 @@ var input string
 func main() {
 	// fishData := parseText(input)
 	fishData := parseInput(input)
-	newData := [][]int{fishData[0]}
-	days := 80
+	newData := fishData[0]
+	days := 256
 	for i := 0; i < days; i++ {
-		row := calculateNextRow(newData[i])
-		newData = append(newData, row)
+		row := calculateNextRow(newData)
+		newData = row
 	}
-	fmt.Println(len(newData[len(newData)-1]))
+	fmt.Println(len(newData))
 }
 
 func calculateNextState(current int) (int, bool) {
