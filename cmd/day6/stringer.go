@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func parseInput(input string) [][]int {
+func parseText(input string) [][]int {
 	list := strings.Split(input, "\n")
 	convertedData := [][]int{}
 	for _, row := range list {
@@ -13,6 +13,19 @@ func parseInput(input string) [][]int {
 		convertedData = append(convertedData, fishData)
 	}
 	return convertedData
+}
+
+func parseInput(input string) [][]int {
+	rawFishes := strings.Split(
+		strings.TrimSpace(input),
+		",",
+	)
+	var fishData []int
+	for _, item := range rawFishes {
+		fish, _ := strconv.Atoi(item)
+		fishData = append(fishData, fish)
+	}
+	return [][]int{fishData}
 }
 
 func rowToFishes(rawMeasurement string) []int {

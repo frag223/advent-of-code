@@ -5,20 +5,19 @@ import (
 	"fmt"
 )
 
-//go:embed test.txt
+//go:embed input.txt
 var input string
 
 func main() {
+	// fishData := parseText(input)
 	fishData := parseInput(input)
-	days := len(fishData) - 1
 	newData := [][]int{fishData[0]}
+	days := 80
 	for i := 0; i < days; i++ {
 		row := calculateNextRow(newData[i])
 		newData = append(newData, row)
 	}
-	fmt.Println(len(newData))
-	newTotal := len(newData[len(newData)-1])
-	fmt.Println(newTotal)
+	fmt.Println(len(newData[len(newData)-1]))
 }
 
 func calculateNextState(current int) (int, bool) {
@@ -40,6 +39,8 @@ func calculateNextRow(row []int) []int {
 		}
 		nextRow = append(nextRow, next)
 	}
-	nextRow = append(nextRow, newFish...)
+	if len(newFish) > 0 {
+		nextRow = append(nextRow, newFish...)
+	}
 	return nextRow
 }
